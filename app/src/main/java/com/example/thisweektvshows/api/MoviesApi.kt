@@ -10,7 +10,7 @@ interface MoviesApi {
     // url
     //https://api.themoviedb.org/3/trending/all/day?api_key=c27c208f49b0acfb67198de27f36d571
 
-    @GET("/3/trending/all")
+    @GET("/3/trending/all/day")
     suspend fun getPopularMovies(@Query("api_key") accessToken: String = API_KEY): Response<MovieResponse>
 
 
