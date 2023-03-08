@@ -1,13 +1,14 @@
 package com.example.thisweektvshows.repo
 
-import com.example.thisweektvshows.api.RetrofitInstance
-import com.example.thisweektvshows.db.MoviesDatabase
+import com.example.thisweektvshows.api.MoviesApi
+import com.example.thisweektvshows.db.MoviesDao
+import javax.inject.Inject
 
-class MoviesRepository(
-    db:MoviesDatabase
+class MoviesRepository @Inject constructor(
+   private val moviesApi: MoviesApi
 ) {
 
     suspend fun getTrendingMovies(api:String) =
-        RetrofitInstance.api.getPopularMovies(api)
+        moviesApi.getPopularMovies(api)
 
 }

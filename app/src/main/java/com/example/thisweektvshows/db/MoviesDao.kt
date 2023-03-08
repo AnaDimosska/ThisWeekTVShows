@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.thisweektvshows.models.Movie
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface MoviesDao {
@@ -14,5 +15,5 @@ interface MoviesDao {
     suspend fun insertFavouriteMovies(movie:Movie): Long
 
     @Query("SELECT * FROM movie")
-    fun getAllFavouritedMovies(): List<Movie>
+    fun getAllFavouritedMovies(): Flow<List<Movie>>
 }

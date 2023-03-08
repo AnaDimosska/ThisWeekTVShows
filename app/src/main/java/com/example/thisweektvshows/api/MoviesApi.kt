@@ -13,5 +13,11 @@ interface MoviesApi {
     @GET("/3/trending/all/day")
     suspend fun getPopularMovies(@Query("api_key") accessToken: String = API_KEY): Response<MovieResponse>
 
+    //movie_details
+    // -- model
+    // ---- MovieDEtailsViewModel
+    // -- presentation
+    //    -- MovieDEtailsFragment
+    //    -- Mo
 
 }

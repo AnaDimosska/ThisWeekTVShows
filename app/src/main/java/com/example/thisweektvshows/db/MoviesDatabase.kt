@@ -15,22 +15,4 @@ import com.example.thisweektvshows.util.Converters
 @TypeConverters(Converters::class)
 abstract class MoviesDatabase: RoomDatabase() {
     abstract fun getMoviesDao(): MoviesDao
-
-    companion object {
-        @Volatile
-        private var instance:MoviesDatabase? = null
-        private val LOCK = Any()
-
-        operator fun invoke(context:Context) = instance ?: synchronized(LOCK){
-            instance ?: createDatabase(context).also { instance = it}
-        }
-
-        private fun createDatabase(context: Context) =
-            Room.databaseBuilder(
-                context.applicationContext,
-                MoviesDatabase::class.java,
-                "movies_db.db"
-            ).build()
-
-    }
 }
