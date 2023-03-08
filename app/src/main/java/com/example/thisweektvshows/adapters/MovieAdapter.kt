@@ -66,7 +66,7 @@ class MovieAdapter(val listMovies: List<Movie>) :
                         .setImageResource(R.drawable.baseline_favorite_border_24)
                 }
             }
-           /* holder.itemView.setOnClickListener {
+            holder.itemView.setOnClickListener {
                 val intent = Intent(it.context, MovieDetailsActivity::class.java)
                 it.context.startActivity(intent)
                 intent.apply {
@@ -76,7 +76,7 @@ class MovieAdapter(val listMovies: List<Movie>) :
 
                     it.context.startActivity(intent)
                 }
-            }*/
+            }
         }
     }
 
