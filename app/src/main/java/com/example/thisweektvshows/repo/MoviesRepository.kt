@@ -9,4 +9,5 @@ class MoviesRepository(
 
     suspend fun getTrendingMovies(api:String) =
         RetrofitInstance.api.getPopularMovies(api)
+
 }

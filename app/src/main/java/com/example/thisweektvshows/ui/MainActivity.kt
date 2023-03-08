@@ -17,6 +17,7 @@ import com.example.thisweektvshows.models.Movie
 import com.example.thisweektvshows.repo.MoviesRepository
 import com.example.thisweektvshows.util.Resource
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,6 +29,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var favouritedMovie: FloatingActionButton
     var moviesList = arrayListOf<Movie>()
     private lateinit var differ: AsyncListDiffer<Movie>
+
+    @Inject
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

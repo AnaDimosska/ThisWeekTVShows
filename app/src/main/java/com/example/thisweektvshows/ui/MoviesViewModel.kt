@@ -10,8 +10,9 @@ import com.example.thisweektvshows.util.Constants.Companion.API_KEY
 import com.example.thisweektvshows.util.Resource
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import javax.inject.Inject
 
-class MoviesViewModel(
+class MoviesViewModel @Inject constructor(
     val moviesRepo: MoviesRepository
 ): ViewModel() {
 
@@ -24,16 +25,28 @@ class MoviesViewModel(
     fun getTrendingMovies(api:String) = viewModelScope.launch {
         trendingMovies.postValue(Resource.Loading())
         val response = moviesRepo.getTrendingMovies(api)
+      //  response.body().let {
+          //  response.body()?.results?.forEach { movie ->
+          //        moviesRepo.movieDao.insertMovies(movie)
+         //   }
+      //  }
+       // response.body()?.let { moviesRepo.movieDao.insertMovies(it.results.) }
         trendingMovies.postValue(handleResponse(response))
     }
 
+
+    /**
+     * This handle response we can choose if we get straight from api or from room Resource.Success(movieResponse?.results)
+     */
     private fun handleResponse(response: Response<MovieResponse>): Resource<List<Movie>>{
         if(response.isSuccessful){
-            response.body().let {movieResponse->
+            response.body().let { movieResponse->
+               // return Resource.Success(moviesRepo.movieDao.getAllTrendingMovies())
                 return Resource.Success(movieResponse?.results)
             }
         }
         return Resource.Error(response.message())
     }
+
 
 }
