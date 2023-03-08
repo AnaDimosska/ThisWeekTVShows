@@ -5,21 +5,18 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
-import android.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.AsyncListDiffer
-
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.util.query
 import com.example.thisweektvshows.R
 import com.example.thisweektvshows.adapters.MovieAdapter
 import com.example.thisweektvshows.db.MoviesDatabase
 import com.example.thisweektvshows.models.Movie
 import com.example.thisweektvshows.repo.MoviesRepository
-import com.example.thisweektvshows.util.DiffUtilCallback
 import com.example.thisweektvshows.util.Resource
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var rv:RecyclerView
     lateinit var progressBar:ProgressBar
     lateinit var searchView:androidx.appcompat.widget.SearchView
+    lateinit var favouritedMovie: FloatingActionButton
     var moviesList = arrayListOf<Movie>()
     private lateinit var differ: AsyncListDiffer<Movie>
 
@@ -65,7 +63,6 @@ class MainActivity : AppCompatActivity() {
         })
 
         searchView = findViewById(R.id.search_view)
-        //searchView.clearFocus()
         searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false

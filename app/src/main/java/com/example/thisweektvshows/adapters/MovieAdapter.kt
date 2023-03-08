@@ -1,24 +1,26 @@
 package com.example.thisweektvshows.adapters
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import android.widget.ImageView
 import androidx.recyclerview.widget.AsyncListDiffer
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.thisweektvshows.R
 import com.example.thisweektvshows.models.Movie
+import com.example.thisweektvshows.ui.MovieDetailsActivity
 import com.example.thisweektvshows.ui.MyDiffCallback
 import com.example.thisweektvshows.util.Constants.Companion.POSTER_PATH
 import java.util.*
-import kotlin.collections.ArrayList
 
 class MovieAdapter(val listMovies: List<Movie>): RecyclerView.Adapter<MovieAdapter.MovieViewHolder>(),Filterable {
 
     private var filteredItemList: List<Movie> = listMovies
+    private var flag = false
 
     inner class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
@@ -42,21 +44,31 @@ class MovieAdapter(val listMovies: List<Movie>): RecyclerView.Adapter<MovieAdapt
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
         val movie = differ.currentList[position]
+        val posterPath = POSTER_PATH + movie.poster_path
         holder.itemView.apply {
-            Glide.with(this).load(POSTER_PATH + movie.poster_path)
+            Glide.with(this).load(posterPath)
                 .into(holder.itemView.findViewById(R.id.movie_image))
-            //holder.itemView.findViewById<TextView>(R.id.movie_title).text = movie.name
-            setOnItemClickListener {
-                onItemClickListener?.let {
-                    it(movie)
+            holder.itemView.findViewById<ImageView>(R.id.favourite_btn).setOnClickListener {
+                if(!flag){
+                    flag = true
+                    holder.itemView.findViewById<ImageView>(R.id.favourite_btn).setImageResource(R.drawable.baseline_favorite_24)
+                } else {
+                    flag = false
+                    holder.itemView.findViewById<ImageView>(R.id.favourite_btn).setImageResource(R.drawable.baseline_favorite_border_24)
                 }
             }
-        }
-    }
+            holder.itemView.setOnClickListener {
+               val intent = Intent(it.context, MovieDetailsActivity::class.java)
+               it.context.startActivity(intent)
+               intent.apply {
+                   putExtra("movie_image",posterPath)
+                   putExtra("movie_name",movie.name)
+                   putExtra("movie_desc",movie.overview)
 
-    private var onItemClickListener: ((Movie) -> Unit)? = null
-    fun setOnItemClickListener(listener: (Movie) -> Unit) {
-        onItemClickListener = listener
+                   it.context.startActivity(intent)
+               }
+           }
+        }
     }
 
     override fun getFilter(): Filter {
